@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG 2: Zero Hunger - Vision 2030</title>
+    <style>
+        /* --- BASIC STYLES --- */
+        :root {
+            --sdg-gold: #DDA63A;
+            --sdg-gold-dark: #b88625;
+            --dark-grey: #333;
+            --light-grey: #f4f4f4;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: var(--dark-grey);
+            background-color: var(--white);
+        }
+
+        h1, h2, h3 { margin-bottom: 0.5em; }
+
+        /* --- HEADER & HERO --- */
+        header {
+            background-color: var(--sdg-gold);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            font-weight: 300;
+            margin-top: 10px;
+        }
+
+        /* --- LAYOUT --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section { margin-bottom: 60px; }
+
+        .bg-light {
+            background-color: var(--light-grey);
+            padding: 40px 0;
+        }
+
+        /* --- INTERACTIVE CARDS --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 6px solid var(--sdg-gold);
+            transition: all 0.3s ease;
+            cursor: pointer; /* Shows hand cursor */
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+            background-color: #fffcf5;
+        }
+
+        .card::after {
+            content: "Click for details ➜";
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 0.8em;
+            color: var(--sdg-gold);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* --- MODAL (POPUP) STYLES --- */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            border-top: 10px solid var(--sdg-gold);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+        }
+
+        .close-btn:hover { color: var(--dark-grey); }
+
+        /* --- STATS & LISTS --- */
+        .stats-box {
+            text-align: center;
+            padding: 30px;
+            border: 2px solid var(--sdg-gold);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .big-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--sdg-gold);
+            display: block;
+        }
+
+        ul.action-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.action-list li {
+            background: var(--light-grey);
+            margin: 10px 0;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            font-size: 1.1em;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--dark-grey);
+            color: var(--white);
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 50px;
+        }
+
+        footer a { color: var(--sdg-gold); text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container" style="padding: 0 20px;">
+            <strong>Agenda 2030</strong> | Sustainable Development Goal 2
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1>Zero Hunger</h1>
+        <p>A world without hunger is possible.</p>
+    </div>
+
+    <div class="container">
+        <section id="intro">
+            <h2>What is the Goal?</h2>
+            <p>The United Nations <strong>Sustainable Development Goal 2 (SDG 2)</strong> has a clear vision: End hunger, achieve food security, improve nutrition, and promote sustainable agriculture. It’s not just about filling stomachs, but ensuring everyone has access to nutritious food.</p>
+        </section>
+
+        <section id="facts">
+            <h2>Why does it matter?</h2>
+            <div class="stats-box">
+                <div class="grid-container">
+                    <div>
+                        <span class="big-number">735+ Million</span>
+                        <p>people face hunger globally.</p>
+                    </div>
+                    <div>
+                        <span class="big-number">1/3</span>
+                        <p>of all food produced is wasted.</p>
+                    </div>
+                    <div>
+                        <span class="big-number">45%</span>
+                        <p>of child deaths under 5 are linked to malnutrition.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="bg-light">
+        <div class="container">
+            <section id="targets">
+                <h2>The 5 Key Targets (Click cards for info)</h2>
+                <div class="grid-container">
+                    <div class="card" onclick="openModal('access')">
+                        <span class="card-icon">🍲</span>
+                        <h3>Access to Food</h3>
+                        <p>Safe and nutritious food all year round for everyone.</p>
+                    </div>
+                    <div class="card" onclick="openModal('malnutrition')">
+                        <span class="card-icon">🥗</span>
+                        <h3>End Malnutrition</h3>
+                        <p>Ending all forms of malnutrition, including stunting and wasting.</p>
+                    </div>
+                    <div class="card" onclick="openModal('productivity')">
+                        <span class="card-icon">📈</span>
+                        <h3>Increase Productivity</h3>
+                        <p>Double the agricultural productivity of small-scale food producers.</p>
+                    </div>
+                    <div class="card" onclick="openModal('sustainable')">
+                        <span class="card-icon">🌾</span>
+                        <h3>Sustainable Agriculture</h3>
+                        <p>Ensure sustainable food production systems tailored to climate change.</p>
+                    </div>
+                    <div class="card" onclick="openModal('diversity')">
+                        <span class="card-icon">🧬</span>
+                        <h3>Maintain Diversity</h3>
+                        <p>Maintain the genetic diversity of seeds, cultivated plants, and animals.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="container">
+        <section id="challenges">
+            <h2>The Biggest Challenges</h2>
+            <p>There are three main reasons why hunger still persists:</p>
+            <ul>
+                <li><strong>Conflict & War:</strong> Destroy infrastructure and displace farmers.</li>
+                <li><strong>Climate Change:</strong> Droughts and floods destroy harvests.</li>
+                <li><strong>Poverty:</strong> People simply cannot afford available food.</li>
+            </ul>
+        </section>
+
+        <hr style="border: 0; border-top: 1px solid #ddd; margin: 40px 0;">
+
+        <section id="action">
+            <h2>What can YOU do?</h2>
+            <ul class="action-list">
+                <li>
+                    <span>🛒 <strong>Shop Smart:</strong> Choose local, seasonal, and fair-trade products.</span>
+                </li>
+                <li>
+                    <span>🗑️ <strong>Stop Waste:</strong> Plan your meals and throw away less food.</span>
+                </li>
+                <li>
+                    <span>🥦 <strong>Eat Less Meat:</strong> Plant-based diets use significantly fewer resources.</span>
+                </li>
+                <li>
+                    <span>📢 <strong>Speak Up:</strong> Share information and support NGOs fighting hunger.</span>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2024 Zero Hunger Initiative | Educational Project</p>
+        <p>Sources: <a href="https://sdgs.un.org/goals/goal2" target="_blank">United Nations</a> | <a href="https://www.wfp.org" target="_blank">World Food Programme</a></p>
+    </footer>
+
+    <div id="infoModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModalBtn()">&times;</span>
+            <h2 id="modalTitle" style="color: var(--sdg-gold);">Title</h2>
+            <p id="modalText">Description text goes here...</p>
+        </div>
+    </div>
+
+    <script>
+        // Content Database
+        const contentData = {
+            'access': {
+                title: "Universal Access to Food",
+                text: "By 2030, the goal is to end hunger and ensure access by all people, in particular the poor and people in vulnerable situations, including infants, to safe, nutritious and sufficient food all year round. This requires improving supply chains and social safety nets."
+            },
+            'malnutrition': {
+                title: "End all forms of Malnutrition",
+                text: "By 2030, end all forms of malnutrition. This includes achieving the internationally agreed targets on stunting and wasting in children under 5 years of age, and addressing the nutritional needs of adolescent girls, pregnant and lactating women and older persons."
+            },
+            'productivity': {
+                title: "Double Agricultural Productivity",
+                text: "By 2030, double the agricultural productivity and incomes of small-scale food producers, in particular women, indigenous peoples, family farmers, pastoralists and fishers, including through secure and equal access to land."
+            },
+            'sustainable': {
+                title: "Sustainable Food Production",
+                text: "By 2030, ensure sustainable food production systems and implement resilient agricultural practices that increase productivity and production, that help maintain ecosystems, that strengthen capacity for adaptation to climate change, extreme weather, drought, flooding and other disasters."
+            },
+            'diversity': {
+                title: "Maintain Genetic Diversity",
+                text: "By 2020 (updated target), maintain the genetic diversity of seeds, cultivated plants and farmed and domesticated animals and their related wild species, including through soundly managed and diversified seed and plant banks at the national, regional and international levels."
+            }
+        };
+
+        const modal = document.getElementById('infoModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalText = document.getElementById('modalText');
+
+        // Function to Open Modal
+        function openModal(key) {
+            const data = contentData[key];
+            if (data) {
+                modalTitle.innerText = data.title;
+                modalText.innerText = data.text;
+                modal.classList.add('active'); // Show modal
+            }
+        }
+
+        // Function to Close Modal (clicking background)
+        function closeModal(event) {
+            if (event.target === modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        // Function to Close Modal (clicking X)
+        function closeModalBtn() {
+            modal.classList.remove('active');
+        }
+    </script>
+
+</body>
+</html>
